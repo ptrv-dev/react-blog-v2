@@ -11,7 +11,7 @@
   font-family: 'Montserrat';
 }
 
-.container {
+*[class*='container'] {
   max-width: calc($container-max + $container-padding * 2);
   margin: 0 auto;
   padding: 0 $container-padding;
@@ -20,6 +20,7 @@
 body {
   color: $color-gray;
   font-size: 16px;
+  background: $color-light;
 }
 
 h1,
