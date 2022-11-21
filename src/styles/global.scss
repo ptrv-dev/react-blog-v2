@@ -1,0 +1,46 @@
+@import './variables';
+@import './font';
+
+// GLOBAL -----------
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: 'Montserrat';
+}
+
+.container {
+  max-width: calc($container-max + $container-padding * 2);
+  margin: 0 auto;
+  padding: 0 $container-padding;
+}
+
+body {
+  color: $color-gray;
+  font-size: 16px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $color-dark;
+  font-weight: normal;
+}
+
+h1 {
+  font-size: 48px;
+}
+h2 {
+  font-size: 36px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
