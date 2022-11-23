@@ -1,4 +1,6 @@
 import React from 'react';
+import LatestNews from '../components/LatestNews';
+import PopularAuthors from '../components/PopularAuthors';
 import PostCard from '../components/PostCard';
 import Button from '../components/UI/Button';
 
@@ -44,7 +46,10 @@ const HomePage: React.FC = () => {
           </div>
           <Button className={style.button}>Посмотреть все</Button>
         </div>
-        <div className={style.aside}>ASIDE</div>
+        <div className={style.aside}>
+          <PopularAuthors />
+          <LatestNews />
+        </div>
       </div>
     </div>
   );
