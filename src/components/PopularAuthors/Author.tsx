@@ -30,15 +30,15 @@ const Author: React.FC<AuthorProps> = ({
         <h4>{username}</h4>
         <div className={style.row}>
           <span className={style.item}>
-            <img src="./assets/img/icons/eye-icon.svg" alt="Views" />
+            <img src="/assets/img/icons/eye-icon.svg" alt="Views" />
             {views}
           </span>
           <span className={style.item}>
-            <img src="./assets/img/icons/thumb-up-icon.svg" alt="Likes" />
+            <img src="/assets/img/icons/thumb-up-icon.svg" alt="Likes" />
             {likes}
           </span>
           <span className={style.item}>
-            <img src="./assets/img/icons/thumb-down-icon.svg" alt="Dislikes" />
+            <img src="/assets/img/icons/thumb-down-icon.svg" alt="Dislikes" />
             {dislikes}
           </span>
         </div>

@@ -16,7 +16,7 @@ const PostCard: React.FC<PostCardProps> = ({ _id, title, text, image }) => {
   return (
     <div className={style.post}>
       <div className={style.image}>
-        <img src={`./assets/img/posts/${image}`} alt={title} />
+        <img src={`/assets/img/posts/${image}`} alt={title} />
       </div>
       <div className={style.body}>
         <div className={style.top}>

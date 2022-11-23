@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
       <div className={style.container}>
         <div className={style.top}>
           <Link to="/" className={style.logo}>
-            <img src="./assets/img/logo.svg" alt="likbezz logo" />
+            <img src="/assets/img/logo.svg" alt="likbezz logo" />
           </Link>
           <div className={style.column}>
             <nav>

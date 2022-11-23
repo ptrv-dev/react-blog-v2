@@ -1,10 +1,11 @@
 import React from 'react';
-import LatestNews from '../components/LatestNews';
-import PopularAuthors from '../components/PopularAuthors';
-import PostCard from '../components/PostCard';
-import Button from '../components/UI/Button';
 
-import style from '../styles/HomePage.module.scss';
+import LatestNews from '../../components/LatestNews';
+import PopularAuthors from '../../components/PopularAuthors';
+import PostCard from '../../components/PostCard';
+import Button from '../../components/UI/Button';
+
+import style from './HomePage.module.scss';
 
 const popularTodayPosts = [
   {
@@ -44,7 +45,9 @@ const HomePage: React.FC = () => {
               <PostCard key={item._id} {...item} />
             ))}
           </div>
-          <Button className={style.button}>Посмотреть все</Button>
+          <Button className={style.button} href="/popular">
+            Посмотреть все
+          </Button>
         </div>
         <div className={style.aside}>
           <PopularAuthors />

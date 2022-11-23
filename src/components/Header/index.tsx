@@ -23,13 +23,15 @@ const Header: React.FC = () => {
     <header className={style.header}>
       <div className={style.container}>
         <Link to="/" className={style.logo}>
-          <img src="./assets/img/logo.svg" alt="likbezz logo" />
+          <img src="/assets/img/logo.svg" alt="likbezz logo" />
         </Link>
         {width > 550 && <Search />}
         {width > 768 ? (
           <div className={style.actions}>
-            <Button>Войти</Button>
-            <Button variant="text">Создать аккаунт</Button>
+            <Button href="/auth/login">Войти</Button>
+            <Button variant="text" href="auth/registration">
+              Создать аккаунт
+            </Button>
           </div>
         ) : (
           isMenuActive && (
