@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import Search from '../Search';
 import Button from '../UI/Button';
@@ -9,9 +10,9 @@ const Header: React.FC = () => {
   return (
     <header className={style.header}>
       <div className={style.container}>
-        <div className={style.logo}>
+        <Link to="/" className={style.logo}>
           <img src="./assets/img/logo.svg" alt="likbezz logo" />
-        </div>
+        </Link>
         <Search />
         <div className={style.actions}>
           <Button>Войти</Button>

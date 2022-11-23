@@ -1,0 +1,33 @@
+.footer {
+  background: #fff;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 25px 0;
+  gap: 50px;
+}
+.column {
+  display: flex;
+  gap: 100px;
+}
+.top {
+  display: flex;
+  justify-content: space-between;
+  nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    a {
+      text-decoration: none;
+      color: #727c85;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+.bottom {
+  text-align: center;
+}
