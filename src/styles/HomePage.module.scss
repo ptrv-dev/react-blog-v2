@@ -4,15 +4,45 @@
 .container {
   display: flex;
   justify-content: space-between;
+  @media screen and (max-width: 767.98px) {
+    flex-direction: column;
+    gap: 60px;
+  }
 }
 .body {
   width: 770px;
+  @media screen and (max-width: 1200px) {
+    width: calc(65% - 15px);
+  }
+  @media screen and (max-width: 1023.98px) {
+    width: calc(55% - 15px);
+  }
+  @media screen and (max-width: 767.98px) {
+    width: 100%;
+  }
   display: flex;
   flex-direction: column;
   gap: 30px;
 }
 .aside {
   width: 370px;
+  @media screen and (max-width: 1200px) {
+    width: calc(35% - 15px);
+  }
+
+  @media screen and (max-width: 1023.98px) {
+    width: calc(45% - 15px);
+  }
+  @media screen and (max-width: 767.98px) {
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+  }
+  @media screen and (max-width: 630px) {
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -20,6 +50,15 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  @media screen and (max-width: 1023.98px) {
+    grid-template-columns: 1fr;
+  }
+  @media screen and (max-width: 767.98px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media screen and (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
   gap: 30px;
 }
 .button {

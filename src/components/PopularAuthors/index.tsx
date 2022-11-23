@@ -11,6 +11,7 @@ const PopularAuthors: React.FC = () => {
       <div className={style.column}>
         {[...Array(5)].map((item, idx) => (
           <Author
+            key={idx}
             _id={String(idx + 10)}
             image={'43.jpg'}
             username="Fred Marshall"
