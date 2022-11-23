@@ -13,6 +13,9 @@
 }
 .aside {
   width: 370px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 .grid {
   display: grid;
