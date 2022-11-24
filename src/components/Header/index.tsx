@@ -9,6 +9,7 @@ import Search from '../Search';
 import Button from '../UI/Button';
 
 import style from './Header.module.scss';
+import PostCreateModal from '../PostCreateModal';
 
 const Actions: React.FC = () => {
   const Cookies = new universalCookie();
@@ -20,6 +21,7 @@ const Actions: React.FC = () => {
 
   const [isUserMenuActive, setIsUserMenuActive] =
     React.useState<boolean>(false);
+  const [isModalVisible, setIsModalVisible] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     const clickOutside = (event: MouseEvent) => {
@@ -38,57 +40,70 @@ const Actions: React.FC = () => {
     Cookies.remove('token');
   };
 
+  const handlePostCreate = () => setIsModalVisible(true);
+
   if (user.isAuth)
     return (
-      <div
-        className={style.user}
-        ref={userButtonRef}
-        onClick={() => setIsUserMenuActive((prev) => !prev)}
-      >
-        <div className={style.userImage}>
-          {user.avatar ? (
-            <img src={`/assets/img/users/${user.avatar}`} alt={user.username} />
-          ) : (
-            <svg
-              viewBox="0 0 15 15"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              width="30"
-              height="30"
-            >
-              <path
-                clipRule="evenodd"
-                d="M10.5 3.498a2.999 2.999 0 01-3 2.998 2.999 2.999 0 113-2.998zm2 10.992h-10v-1.996a3 3 0 013-3h4a3 3 0 013 3v1.997z"
-                stroke="currentColor"
-                strokeLinecap="square"
-              ></path>
-            </svg>
+      <>
+        <div
+          className={style.user}
+          ref={userButtonRef}
+          onClick={() => setIsUserMenuActive((prev) => !prev)}
+        >
+          <div className={style.userImage}>
+            {user.avatar ? (
+              <img
+                src={`/assets/img/users/${user.avatar}`}
+                alt={user.username}
+              />
+            ) : (
+              <svg
+                viewBox="0 0 15 15"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                width="30"
+                height="30"
+              >
+                <path
+                  clipRule="evenodd"
+                  d="M10.5 3.498a2.999 2.999 0 01-3 2.998 2.999 2.999 0 113-2.998zm2 10.992h-10v-1.996a3 3 0 013-3h4a3 3 0 013 3v1.997z"
+                  stroke="currentColor"
+                  strokeLinecap="square"
+                ></path>
+              </svg>
+            )}
+          </div>
+          <div className={style.userColumn}>
+            <h4>{user.username}</h4>
+            <p>{user.email}</p>
+          </div>
+          {isUserMenuActive && (
+            <div className={style.userMenu}>
+              <Link
+                to={`/users/${user.username}`}
+                className={style.userMenuItem}
+              >
+                Мой профиль
+              </Link>
+              <Link
+                to={`/users/${user.username}/settings`}
+                className={style.userMenuItem}
+              >
+                Настройки профиля
+              </Link>
+              <button className={style.userMenuItem} onClick={handlePostCreate}>
+                Создать пост
+              </button>
+              <button className={style.userMenuItem} onClick={handleLogout}>
+                Выйти из аккаунта
+              </button>
+            </div>
           )}
         </div>
-        <div className={style.userColumn}>
-          <h4>{user.username}</h4>
-          <p>{user.email}</p>
-        </div>
-        {isUserMenuActive && (
-          <div className={style.userMenu}>
-            <Link to={`/users/${user.username}`} className={style.userMenuItem}>
-              Мой профиль
-            </Link>
-            <Link
-              to={`/users/${user.username}/settings`}
-              className={style.userMenuItem}
-            >
-              Настройки профиля
-            </Link>
-            <Link to={`/post/create`} className={style.userMenuItem}>
-              Создать пост
-            </Link>
-            <button className={style.userMenuItem} onClick={handleLogout}>
-              Выйти из аккаунта
-            </button>
-          </div>
+        {isModalVisible && (
+          <PostCreateModal closeModal={() => setIsModalVisible(false)} />
         )}
-      </div>
+      </>
     );
 
   return (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import { Link } from 'react-router-dom';
 
 import style from './Button.module.scss';
@@ -9,6 +9,7 @@ interface ButtonProps {
   children: any;
   href?: string;
   className?: string;
+  onClick?: any;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -17,6 +18,7 @@ const Button: React.FC<ButtonProps> = ({
   children,
   href,
   className,
+  onClick,
 }) => {
   const customClass = [style.button];
   size === 'small' && customClass.push(style.small);
@@ -26,12 +28,16 @@ const Button: React.FC<ButtonProps> = ({
 
   if (href)
     return (
-      <Link to={href} className={customClass.join(' ')}>
+      <Link to={href} className={customClass.join(' ')} onClick={onClick}>
         {children}
       </Link>
     );
 
-  return <button className={customClass.join(' ')}>{children}</button>;
+  return (
+    <button className={customClass.join(' ')} onClick={onClick}>
+      {children}
+    </button>
+  );
 };
 
 export default Button;
