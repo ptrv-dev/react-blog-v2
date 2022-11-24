@@ -1,15 +1,16 @@
 import React from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
 import axios from 'axios';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { Navigate } from 'react-router-dom';
 
 import { IGetMeResponse } from '../../@types/custom';
 
+import { login } from '../../redux/slices/user.slice';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 
 import Button from '../../components/UI/Button';
 
 import style from './RegistrationPage.module.scss';
-import { login } from '../../redux/slices/user.slice';
 
 interface FormFields {
   username: string;
@@ -57,7 +58,7 @@ const LoginPage: React.FC = () => {
     }
   };
 
-  console.log(userIsAuth);
+  if (userIsAuth) return <Navigate to="/" />;
 
   return (
     <main className={style.root}>
