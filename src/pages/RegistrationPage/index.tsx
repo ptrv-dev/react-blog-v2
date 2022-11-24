@@ -2,9 +2,14 @@ import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import axios from 'axios';
 
+import { IGetMeResponse } from '../../@types/custom';
+
+import { useAppDispatch, useAppSelector } from '../../redux/store';
+
 import Button from '../../components/UI/Button';
 
 import style from './RegistrationPage.module.scss';
+import { login } from '../../redux/slices/user.slice';
 
 interface FormFields {
   username: string;
@@ -14,6 +19,9 @@ interface FormFields {
 }
 
 const LoginPage: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const userIsAuth = useAppSelector((state) => state.user.isAuth);
+
   const [formError, setFormError] = React.useState<string | null>(null);
 
   const {
@@ -37,12 +45,19 @@ const LoginPage: React.FC = () => {
           withCredentials: true,
         }
       );
+      const result = await axios.get<IGetMeResponse>(
+        'http://localhost:4444/auth/me',
+        { withCredentials: true }
+      );
+      dispatch(login({ ...result.data, isAuth: true }));
     } catch (error) {
       if (axios.isAxiosError(error)) {
         setFormError(error.response!.data.message);
       }
     }
   };
+
+  console.log(userIsAuth);
 
   return (
     <main className={style.root}>
