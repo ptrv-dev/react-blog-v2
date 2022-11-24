@@ -5,6 +5,7 @@ interface IUserSlice {
   username: string;
   email: string;
   token: string;
+  avatar: string;
   isAuth: boolean;
 }
 
@@ -13,6 +14,7 @@ const initialState: IUserSlice = {
   username: '',
   email: '',
   token: '',
+  avatar: '',
   isAuth: false,
 };
 
@@ -25,6 +27,7 @@ const userSlice = createSlice({
       state.email = '';
       state.username = '';
       state.token = '';
+      state.avatar = '';
       state.isAuth = false;
     },
     login: (state, action: PayloadAction<IUserSlice>) => {
@@ -32,6 +35,7 @@ const userSlice = createSlice({
       state.email = action.payload.email;
       state.username = action.payload.username;
       state.token = action.payload.token;
+      state.avatar = action.payload.avatar;
       state.isAuth = true;
     },
   },

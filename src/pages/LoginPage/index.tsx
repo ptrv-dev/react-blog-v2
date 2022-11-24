@@ -31,8 +31,6 @@ const LoginPage: React.FC = () => {
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     setFormError(null);
     try {
-      console.log(data);
-
       await axios.post(
         'http://localhost:4444/auth/login',
         { email: data.email, password: data.password },
@@ -44,7 +42,6 @@ const LoginPage: React.FC = () => {
       });
       dispatch(login({ ...result.data, isAuth: true }));
     } catch (error) {
-      console.log(error);
       setFormError('Неверный E-Mail или пароль.');
     }
   };
