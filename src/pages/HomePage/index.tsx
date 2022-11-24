@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 
 import LatestNews from '../../components/LatestNews';
@@ -5,43 +6,31 @@ import PopularAuthors from '../../components/PopularAuthors';
 import PostCard from '../../components/PostCard';
 import Button from '../../components/UI/Button';
 
+import { IPost } from '../../@types/custom';
+
 import style from './HomePage.module.scss';
 
-const popularTodayPosts = [
-  {
-    _id: 1,
-    image: '3.jpg',
-    title: 'Какой-то заголовок для поста',
-    text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic, fuga. Reprehenderit saepe ad eos nesciunt. Officia enim porro doloribus ducimus.',
-  },
-  {
-    _id: 2,
-    image: '1.jpg',
-    title: 'Какой-то заголовок для поста',
-    text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic, fuga. Reprehenderit saepe ad eos nesciunt. Officia enim porro doloribus ducimus.',
-  },
-  {
-    _id: 3,
-    image: '2.jpg',
-    title: 'Какой-то заголовок для поста',
-    text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic, fuga. Reprehenderit saepe ad eos nesciunt. Officia enim porro doloribus ducimus.',
-  },
-  {
-    _id: 4,
-    image: '4.jpg',
-    title: 'Какой-то заголовок для поста',
-    text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic, fuga. Reprehenderit saepe ad eos nesciunt. Officia enim porro doloribus ducimus.',
-  },
-];
-
 const HomePage: React.FC = () => {
+  const [posts, setPosts] = React.useState<IPost[]>([]);
+
+  React.useEffect(() => {
+    async function fetchPosts() {
+      setPosts([]);
+      const { data } = await axios.get<IPost[]>(
+        'http://localhost:4444/post?sortBy=views&order=desc&limit=4'
+      );
+      setPosts(data);
+    }
+    fetchPosts();
+  }, []);
+
   return (
     <div className={style.root}>
       <div className={style.container}>
         <div className={style.body}>
           <h2>Популярное за сегодня:</h2>
           <div className={style.grid}>
-            {popularTodayPosts.map((item) => (
+            {posts.map((item) => (
               <PostCard key={item._id} {...item} />
             ))}
           </div>

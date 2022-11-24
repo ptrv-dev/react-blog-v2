@@ -1,29 +1,40 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import Button from '../UI/Button';
 import IconButton from '../UI/IconButton';
 
+import { IPost } from '../../@types/custom';
+
 import style from './PostCard.module.scss';
 
-interface PostCardProps {
-  _id: number;
-  title: string;
-  text: string;
-  image: string;
-}
-
-const PostCard: React.FC<PostCardProps> = ({ _id, title, text, image }) => {
+const PostCard: React.FC<IPost> = ({
+  _id,
+  title,
+  text,
+  image,
+  author,
+  createdAt,
+  likes,
+  dislikes,
+}) => {
   return (
     <div className={style.post}>
-      <div className={style.image}>
-        <img src={`/assets/img/posts/${image}`} alt={title} />
-      </div>
+      {image && (
+        <div className={style.image}>
+          <img src={`http://localhost:4444/uploads/${image}`} alt={title} />
+        </div>
+      )}
       <div className={style.body}>
         <div className={style.top}>
-          <Link to="/user/username110" className={style.author}>
-            username110
+          <Link to={`/user/${author.username}`} className={style.author}>
+            {author.username}
           </Link>
-          <span className={style.date}>20.11.2022 23:03</span>
+          <span className={style.date}>
+            {`${new Date(createdAt).toLocaleDateString()} ${new Date(
+              createdAt
+            ).toLocaleTimeString()}`}
+          </span>
         </div>
         <h4 className={style.heading}>{title}</h4>
         <p className={style.text}>{text}</p>
@@ -44,7 +55,7 @@ const PostCard: React.FC<PostCardProps> = ({ _id, title, text, image }) => {
                   />
                 </g>
               </svg>
-              36
+              {likes.length}
             </button>
             <button className={style.button}>
               <svg
@@ -61,7 +72,7 @@ const PostCard: React.FC<PostCardProps> = ({ _id, title, text, image }) => {
                   />
                 </g>
               </svg>
-              5
+              {dislikes.length}
             </button>
           </div>
           <div className={style.actionButtons}>
@@ -81,7 +92,9 @@ const PostCard: React.FC<PostCardProps> = ({ _id, title, text, image }) => {
                 </g>
               </svg>
             </IconButton>
-            <Button size="small">Читать</Button>
+            <Button size="small" href={`/post/${_id}`}>
+              Читать
+            </Button>
           </div>
         </div>
       </div>
