@@ -6,19 +6,21 @@ interface IconButtonProps {
   variant?: 'contained' | 'outlined' | 'text';
   size?: 'small' | 'medium';
   children: any;
+  className?: string;
 }
 
 const IconButton: React.FC<IconButtonProps> = ({
   variant = 'contained',
   size = 'medium',
   children,
+  className,
 }) => {
-  const className = [style.iconButton];
-  size === 'small' && className.push(style.small);
-  if (variant === 'outlined') className.push(style.outlined);
-  else if (variant === 'text') className.push(style.text);
+  const customClasses = [style.iconButton, className];
+  size === 'small' && customClasses.push(style.small);
+  if (variant === 'outlined') customClasses.push(style.outlined);
+  else if (variant === 'text') customClasses.push(style.text);
 
-  return <button className={className.join(' ')}>{children}</button>;
+  return <button className={customClasses.join(' ')}>{children}</button>;
 };
 
 export default IconButton;

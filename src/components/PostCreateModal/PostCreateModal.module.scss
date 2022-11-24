@@ -28,15 +28,17 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  button {
-    background: none;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    transition: transform 0.1s ease-in-out;
-    &:hover {
-      transform: scale(0.97);
-    }
+  position: relative;
+}
+
+.addButton {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: transform 0.1s ease-in-out;
+  &:hover {
+    transform: scale(0.97);
   }
 }
 
@@ -61,4 +63,34 @@
   display: flex;
   justify-content: flex-end;
   gap: 30px;
+}
+
+.imageImg {
+  width: 100%;
+}
+
+.icon {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background: #d72323;
+  border: none;
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+  cursor: pointer;
+}
+
+.fieldError {
+  color: #d72323;
+  &::placeholder {
+    color: rgba(#d72323, 0.5);
+  }
 }
