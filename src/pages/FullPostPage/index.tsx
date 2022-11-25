@@ -83,14 +83,21 @@ const FullPostPage: React.FC = () => {
       (prev) => prev && { ...prev, comments: [...prev.comments, comment] }
     );
 
+  const handleCommentRemove = (id: string) =>
+    setData(
+      (prev) =>
+        prev && {
+          ...prev,
+          comments: prev.comments.filter((item) => item._id !== id),
+        }
+    );
+
   if (!data)
     return (
       <div className="container">
         <h2>Loading...</h2>
       </div>
     );
-
-  console.log(data.comments);
 
   return (
     <div className={style.root}>
@@ -186,7 +193,11 @@ const FullPostPage: React.FC = () => {
           )}
           <div className={style.asideBody}>
             {data.comments.map((comment) => (
-              <CommentItem key={comment._id} {...comment} />
+              <CommentItem
+                key={comment._id}
+                {...comment}
+                onCommentRemove={handleCommentRemove}
+              />
             ))}
           </div>
         </div>

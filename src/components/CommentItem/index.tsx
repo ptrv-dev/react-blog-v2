@@ -1,20 +1,110 @@
 import React from 'react';
+import axios from 'axios';
+
+import { useAppSelector } from '../../redux/store';
 
 import { IComment } from '../../@types/custom';
 
 import style from './CommentItem.module.scss';
 
-const CommentItem: React.FC<IComment> = ({
+interface CommentItemProps extends IComment {
+  onCommentRemove: (id: string) => void;
+}
+
+const CommentItem: React.FC<CommentItemProps> = ({
   _id,
   author,
   text,
   likes,
   dislikes,
+  onCommentRemove,
 }) => {
+  const user = useAppSelector((state) => state.user);
+
+  const [isMenuVisible, setIsMenuVisible] = React.useState<boolean>(false);
+  const buttonMoreRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) =>
+      !event.composedPath().includes(buttonMoreRef.current!) &&
+      setIsMenuVisible(false);
+    window.addEventListener('click', handleClickOutside);
+
+    return () => window.removeEventListener('click', handleClickOutside);
+  }, []);
+
   const handleLike = async () => {};
   const handleDislike = async () => {};
+
+  const handleMoreMenu = () => setIsMenuVisible((prev) => !prev);
+  const handleEdit = async () => {};
+  const handleRemove = async () => {
+    if (!window.confirm('Удалить комментарий?')) return false;
+
+    await axios.delete(`http://localhost:4444/comment/${_id}`, {
+      withCredentials: true,
+    });
+
+    onCommentRemove(_id);
+    alert('Комментарий удален!');
+  };
   return (
     <div className={style.comment}>
+      {author._id === user._id && (
+        <div
+          className={`${style.more} ${isMenuVisible ? style.moreActive : ''}`}
+          onClick={handleMoreMenu}
+          ref={buttonMoreRef}
+        >
+          {isMenuVisible ? (
+            <div className={style.moreMenu}>
+              <button className={style.moreMenuItem} onClick={handleEdit}>
+                <svg
+                  viewBox="0 0 15 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="15"
+                  height="15"
+                >
+                  <path
+                    d="M.5 10.5l-.354-.354-.146.147v.207h.5zm10-10l.354-.354a.5.5 0 00-.708 0L10.5.5zm4 4l.354.354a.5.5 0 000-.708L14.5 4.5zm-10 10v.5h.207l.147-.146L4.5 14.5zm-4 0H0a.5.5 0 00.5.5v-.5zm.354-3.646l10-10-.708-.708-10 10 .708.708zm9.292-10l4 4 .708-.708-4-4-.708.708zm4 3.292l-10 10 .708.708 10-10-.708-.708zM4.5 14h-4v1h4v-1zm-3.5.5v-4H0v4h1z"
+                    fill="currentColor"
+                  ></path>
+                </svg>
+                Изменить
+              </button>
+              <button className={style.moreMenuItem} onClick={handleRemove}>
+                <svg
+                  viewBox="0 0 15 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="15"
+                  height="15"
+                >
+                  <path
+                    d="M4.5 3V1.5a1 1 0 011-1h4a1 1 0 011 1V3M0 3.5h15m-13.5 0v10a1 1 0 001 1h10a1 1 0 001-1v-10M7.5 7v5m-3-3v3m6-3v3"
+                    stroke="currentColor"
+                  ></path>
+                </svg>
+                Удалить
+              </button>
+            </div>
+          ) : (
+            <svg
+              viewBox="0 0 15 15"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              width="15"
+              height="15"
+            >
+              <path
+                d="M3 7.5a.5.5 0 11-1 0 .5.5 0 011 0zm5 0a.5.5 0 11-1 0 .5.5 0 011 0zm5 0a.5.5 0 11-1 0 .5.5 0 011 0z"
+                stroke="currentColor"
+              ></path>
+            </svg>
+          )}
+        </div>
+      )}
       <div className={style.avatar}>
         {author.image ? (
           <img
