@@ -37,7 +37,9 @@ const PostCard: React.FC<IPost> = ({
           </span>
         </div>
         <h4 className={style.heading}>{title}</h4>
-        <p className={style.text}>{text}</p>
+        <p className={style.text}>
+          {image ? text.slice(0, 150) : text.slice(0, 500)}
+        </p>
         <div className={style.bottom}>
           <div className={style.ratingButtons}>
             <button className={style.button}>

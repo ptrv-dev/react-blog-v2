@@ -16,8 +16,9 @@ const HomePage: React.FC = () => {
   React.useEffect(() => {
     async function fetchPosts() {
       setPosts([]);
+      const date = new Date().toLocaleDateString();
       const { data } = await axios.get<IPost[]>(
-        'http://localhost:4444/post?sortBy=views&order=desc&limit=4'
+        `http://localhost:4444/post?date=${date}&sortBy=views&order=desc&limit=4`
       );
       setPosts(data);
     }

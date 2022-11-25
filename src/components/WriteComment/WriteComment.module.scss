@@ -1,0 +1,20 @@
+.root {
+  display: flex;
+  flex-direction: column;
+}
+.input {
+  border-radius: 5px;
+  overflow: hidden;
+  border: none;
+  background: #f5f5f5;
+  font-size: 16px;
+  color: #727c85;
+  padding: 10px;
+  outline: none;
+  resize: none;
+}
+
+.button {
+  margin-top: 10px;
+  align-self: flex-end;
+}
