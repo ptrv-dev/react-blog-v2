@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 
-import { IPost } from '../../@types/custom';
+import { IComment, IPost } from '../../@types/custom';
 
 import { useAppSelector } from '../../redux/store';
 
@@ -77,6 +77,11 @@ const FullPostPage: React.FC = () => {
   };
 
   const handleFavorite = async () => {};
+
+  const handleCommentAdd = (comment: IComment) =>
+    setData(
+      (prev) => prev && { ...prev, comments: [...prev.comments, comment] }
+    );
 
   if (!data)
     return (
@@ -176,8 +181,10 @@ const FullPostPage: React.FC = () => {
         </div>
         <div className={style.aside}>
           <h3>Комментарии</h3>
+          {isAuth && (
+            <WriteComment postId={data._id} addComment={handleCommentAdd} />
+          )}
           <div className={style.asideBody}>
-            {isAuth && <WriteComment />}
             {data.comments.map((comment) => (
               <CommentItem key={comment._id} {...comment} />
             ))}

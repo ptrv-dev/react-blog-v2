@@ -1,6 +1,7 @@
 .root {
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px;
 }
 .input {
   border-radius: 5px;
@@ -17,4 +18,12 @@
 .button {
   margin-top: 10px;
   align-self: flex-end;
+}
+
+.inputError {
+  color: #d72323;
+  background: #fbe9e9;
+  &::placeholder {
+    color: #d72323;
+  }
 }
