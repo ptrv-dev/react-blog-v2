@@ -11,16 +11,27 @@ import { IPost } from '../../@types/custom';
 import style from './HomePage.module.scss';
 
 const HomePage: React.FC = () => {
-  const [posts, setPosts] = React.useState<IPost[]>([]);
+  const [latestPosts, setLatestPosts] = React.useState<IPost[]>([]);
+  const [popularPosts, setPopularPosts] = React.useState<IPost[]>([]);
 
   React.useEffect(() => {
     async function fetchPosts() {
-      setPosts([]);
       const date = new Date().toLocaleDateString();
-      const { data } = await axios.get<IPost[]>(
-        `http://localhost:4444/post?date=${date}&sortBy=views&order=desc&limit=4`
-      );
-      setPosts(data);
+
+      setPopularPosts([]);
+      setLatestPosts([]);
+
+      axios
+        .get<IPost[]>(
+          `http://localhost:4444/post?date=${date}&sortBy=views&order=desc&limit=4`
+        )
+        .then((result) => setPopularPosts(result.data));
+
+      axios
+        .get<IPost[]>(
+          `http://localhost:4444/post?&sortBy=createdAt&order=desc&limit=4`
+        )
+        .then((result) => setLatestPosts(result.data));
     }
     fetchPosts();
   }, []);
@@ -29,20 +40,38 @@ const HomePage: React.FC = () => {
     <div className={style.root}>
       <div className={style.container}>
         <div className={style.body}>
-          <h2>Популярное за сегодня:</h2>
-          <div className={style.grid}>
-            {posts.map((item) => (
-              <PostCard
-                key={item._id}
-                {...item}
-                likes={new Map(item.likes)}
-                dislikes={new Map(item.dislikes)}
-              />
-            ))}
-          </div>
-          <Button className={style.button} href="/popular">
-            Посмотреть все
-          </Button>
+          <section>
+            <h2>Популярное за сегодня:</h2>
+            <div className={style.grid}>
+              {popularPosts.map((item) => (
+                <PostCard
+                  key={item._id}
+                  {...item}
+                  likes={new Map(item.likes)}
+                  dislikes={new Map(item.dislikes)}
+                />
+              ))}
+            </div>
+            <Button className={style.button} href="/popular">
+              Посмотреть все
+            </Button>
+          </section>
+          <section>
+            <h2>Последнее:</h2>
+            <div className={style.grid}>
+              {latestPosts.map((item) => (
+                <PostCard
+                  key={item._id}
+                  {...item}
+                  likes={new Map(item.likes)}
+                  dislikes={new Map(item.dislikes)}
+                />
+              ))}
+            </div>
+            <Button className={style.button} href="/popular">
+              Посмотреть все
+            </Button>
+          </section>
         </div>
         <div className={style.aside}>
           <PopularAuthors />

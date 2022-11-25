@@ -22,7 +22,12 @@
   }
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 50px;
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
 }
 .aside {
   width: 370px;
