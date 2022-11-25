@@ -1,0 +1,48 @@
+.comment {
+  display: flex;
+  width: 100%;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  background: #f5f5f5;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+  }
+  svg {
+    width: 20px;
+    height: 20px;
+    stroke: #151425;
+  }
+}
+.column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.actions {
+  margin-top: 5px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+  button {
+    background: none;
+    border: none;
+    padding: 5px;
+    display: inline-flex;
+    cursor: pointer;
+    gap: 5px;
+    font-size: 16px;
+    outline: none;
+    color: #727c85;
+  }
+}

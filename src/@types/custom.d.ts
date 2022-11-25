@@ -12,6 +12,18 @@ export interface IAuthor {
   avatar: string;
 }
 
+export interface IComment {
+  _id: string;
+  author: Author;
+  post: string;
+  text: string;
+  likes: string[];
+  dislikes: string[];
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+}
+
 export interface IPost {
   _id: string;
   author: Author;
@@ -21,9 +33,8 @@ export interface IPost {
   likes: Map<string, boolean>;
   dislikes: Map<string, boolean>;
   views: number;
-  comments: string[];
+  comments: IComment[];
   createdAt: Date;
   updatedAt: Date;
   __v: number;
-  _doc?: IPost;
 }

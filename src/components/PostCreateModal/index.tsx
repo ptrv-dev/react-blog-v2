@@ -141,7 +141,7 @@ const PostCreateModal: React.FC<PostCreateModalProps> = ({ closeModal }) => {
           {...register('text', {
             required: true,
             minLength: 10,
-            maxLength: 1024,
+            maxLength: 4096,
           })}
         />
         <div className={style.bottom}>

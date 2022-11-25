@@ -10,6 +10,7 @@ import Button from '../../components/UI/Button';
 
 import style from './FullPostPage.module.scss';
 import WriteComment from '../../components/WriteComment';
+import CommentItem from '../../components/CommentItem';
 
 const FullPostPage: React.FC = () => {
   const { postId } = useParams();
@@ -25,7 +26,7 @@ const FullPostPage: React.FC = () => {
       );
       console.log(data);
       setData({
-        ...data._doc!,
+        ...data,
         likes: new Map(data.likes),
         dislikes: new Map(data.dislikes),
       });
@@ -83,6 +84,8 @@ const FullPostPage: React.FC = () => {
         <h2>Loading...</h2>
       </div>
     );
+
+  console.log(data.comments);
 
   return (
     <div className={style.root}>
@@ -173,7 +176,12 @@ const FullPostPage: React.FC = () => {
         </div>
         <div className={style.aside}>
           <h3>Комментарии</h3>
-          <div className={style.asideBody}>{isAuth && <WriteComment />}</div>
+          <div className={style.asideBody}>
+            {isAuth && <WriteComment />}
+            {data.comments.map((comment) => (
+              <CommentItem key={comment._id} {...comment} />
+            ))}
+          </div>
         </div>
       </div>
     </div>
