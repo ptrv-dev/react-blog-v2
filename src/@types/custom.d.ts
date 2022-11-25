@@ -18,11 +18,12 @@ export interface IPost {
   image: string;
   title: string;
   text: string;
-  likes: string[];
-  dislikes: string[];
+  likes: Map<string, boolean>;
+  dislikes: Map<string, boolean>;
   views: number;
   comments: string[];
   createdAt: Date;
   updatedAt: Date;
   __v: number;
+  _doc?: IPost;
 }

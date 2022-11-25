@@ -57,7 +57,7 @@ const PostCard: React.FC<IPost> = ({
                   />
                 </g>
               </svg>
-              {likes.length}
+              {likes.size}
             </button>
             <button className={style.button}>
               <svg
@@ -74,7 +74,7 @@ const PostCard: React.FC<IPost> = ({
                   />
                 </g>
               </svg>
-              {dislikes.length}
+              {dislikes.size}
             </button>
           </div>
           <div className={style.actionButtons}>

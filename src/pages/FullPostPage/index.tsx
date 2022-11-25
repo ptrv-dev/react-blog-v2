@@ -13,7 +13,7 @@ import WriteComment from '../../components/WriteComment';
 
 const FullPostPage: React.FC = () => {
   const { postId } = useParams();
-  const { isAuth } = useAppSelector((state) => state.user);
+  const { _id, isAuth } = useAppSelector((state) => state.user);
 
   const [data, setData] = React.useState<IPost | null>(null);
 
@@ -23,10 +23,59 @@ const FullPostPage: React.FC = () => {
       const { data } = await axios.get<IPost>(
         `http://localhost:4444/post/${postId}`
       );
-      setData(data);
+      console.log(data);
+      setData({
+        ...data._doc!,
+        likes: new Map(data.likes),
+        dislikes: new Map(data.dislikes),
+      });
     }
     fetchPostData();
   }, [postId]);
+
+  const handleLike = async () => {
+    try {
+      const { data } = await axios.patch(
+        `http://localhost:4444/post/${postId}/like`,
+        {},
+        { withCredentials: true }
+      );
+      setData(
+        (prev) =>
+          prev && {
+            ...prev,
+            likes: new Map(data.likes),
+            dislikes: new Map(data.dislikes),
+          }
+      );
+    } catch (error) {
+      console.error(error);
+      alert('Ошибка при попытке лайкнуть пост...');
+    }
+  };
+
+  const handleDislike = async () => {
+    try {
+      const { data } = await axios.patch(
+        `http://localhost:4444/post/${postId}/dislike`,
+        {},
+        { withCredentials: true }
+      );
+      setData(
+        (prev) =>
+          prev && {
+            ...prev,
+            likes: new Map(data.likes),
+            dislikes: new Map(data.dislikes),
+          }
+      );
+    } catch (error) {
+      console.error(error);
+      alert('Ошибка при попытке лайкнуть пост...');
+    }
+  };
+
+  const handleFavorite = async () => {};
 
   if (!data)
     return (
@@ -61,7 +110,11 @@ const FullPostPage: React.FC = () => {
             <h2 className={style.postTitle}>{data.title}</h2>
             <p className={style.postText}>{data.text}</p>
             <div className={style.postBottom}>
-              <Button variant="text">
+              <Button
+                variant="text"
+                onClick={handleLike}
+                className={data.likes.has(_id) ? style.buttonActive : ''}
+              >
                 <svg
                   width="18"
                   height="18"
@@ -76,9 +129,13 @@ const FullPostPage: React.FC = () => {
                     />
                   </g>
                 </svg>
-                {data.likes.length}
+                {data.likes.size}
               </Button>
-              <Button variant="text">
+              <Button
+                variant="text"
+                onClick={handleDislike}
+                className={data.dislikes.has(_id) ? style.buttonActive : ''}
+              >
                 <svg
                   width="18"
                   height="18"
@@ -93,9 +150,9 @@ const FullPostPage: React.FC = () => {
                     />
                   </g>
                 </svg>
-                {data.dislikes.length}
+                {data.dislikes.size}
               </Button>
-              <button className={style.postFavorite}>
+              <button className={style.postFavorite} onClick={handleFavorite}>
                 <svg
                   width="18"
                   height="18"
