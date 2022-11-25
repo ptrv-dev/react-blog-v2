@@ -32,7 +32,12 @@ const HomePage: React.FC = () => {
           <h2>Популярное за сегодня:</h2>
           <div className={style.grid}>
             {posts.map((item) => (
-              <PostCard key={item._id} {...item} />
+              <PostCard
+                key={item._id}
+                {...item}
+                likes={new Map(item.likes)}
+                dislikes={new Map(item.dislikes)}
+              />
             ))}
           </div>
           <Button className={style.button} href="/popular">
