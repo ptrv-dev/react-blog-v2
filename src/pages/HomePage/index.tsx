@@ -23,7 +23,7 @@ const HomePage: React.FC = () => {
 
       axios
         .get<IPost[]>(
-          `http://localhost:4444/post?date=${date}&sortBy=views&order=desc&limit=4`
+          `http://localhost:4444/post?dateFrom=${date}&sortBy=views&order=desc&limit=4`
         )
         .then((result) => setPopularPosts(result.data));
 
@@ -35,6 +35,8 @@ const HomePage: React.FC = () => {
     }
     fetchPosts();
   }, []);
+
+  const todayDate = new Date().toLocaleDateString();
 
   return (
     <div className={style.root}>
@@ -52,7 +54,10 @@ const HomePage: React.FC = () => {
                 />
               ))}
             </div>
-            <Button className={style.button} href="/popular">
+            <Button
+              className={style.button}
+              href={`/posts?sortBy=views&order=desc&dateFrom=${todayDate}`}
+            >
               Посмотреть все
             </Button>
           </section>
@@ -68,7 +73,10 @@ const HomePage: React.FC = () => {
                 />
               ))}
             </div>
-            <Button className={style.button} href="/popular">
+            <Button
+              className={style.button}
+              href="/posts?sortBy=createdAt&order=desc"
+            >
               Посмотреть все
             </Button>
           </section>

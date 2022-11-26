@@ -38,3 +38,15 @@ export interface IPost {
   updatedAt: Date;
   __v: number;
 }
+
+export interface IUser {
+  _id: string;
+  username: string;
+  email: string;
+  password: string;
+  avatar: string;
+  posts: IPost[];
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+}

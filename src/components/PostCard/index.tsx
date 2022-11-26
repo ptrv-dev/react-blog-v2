@@ -21,9 +21,9 @@ const PostCard: React.FC<IPost> = ({
   return (
     <div className={style.post}>
       {image && (
-        <div className={style.image}>
+        <Link to={`/post/${_id}`} className={style.image}>
           <img src={`http://localhost:4444/uploads/${image}`} alt={title} />
-        </div>
+        </Link>
       )}
       <div className={style.body}>
         <div className={style.top}>

@@ -35,6 +35,7 @@ const FullPostPage: React.FC = () => {
   }, [postId]);
 
   const handleLike = async () => {
+    if (!isAuth) return false;
     try {
       const { data } = await axios.patch(
         `http://localhost:4444/post/${postId}/like`,
@@ -56,6 +57,7 @@ const FullPostPage: React.FC = () => {
   };
 
   const handleDislike = async () => {
+    if (!isAuth) return false;
     try {
       const { data } = await axios.patch(
         `http://localhost:4444/post/${postId}/dislike`,
@@ -76,7 +78,9 @@ const FullPostPage: React.FC = () => {
     }
   };
 
-  const handleFavorite = async () => {};
+  const handleFavorite = async () => {
+    if (!isAuth) return false;
+  };
 
   const handleCommentAdd = (comment: IComment) =>
     setData(

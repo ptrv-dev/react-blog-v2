@@ -21,11 +21,31 @@ const Author: React.FC<AuthorProps> = ({
 }) => {
   return (
     <div className={style.root}>
-      <img
-        src={`./assets/img/users/${image}`}
-        alt={username}
-        className={style.image}
-      />
+      <div className={style.image}>
+        {image ? (
+          <img
+            src={`./assets/img/users/${image}`}
+            alt={username}
+            className={style.image}
+          />
+        ) : (
+          <svg
+            viewBox="0 0 15 15"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="30"
+          >
+            <path
+              clipRule="evenodd"
+              d="M10.5 3.498a2.999 2.999 0 01-3 2.998 2.999 2.999 0 113-2.998zm2 10.992h-10v-1.996a3 3 0 013-3h4a3 3 0 013 3v1.997z"
+              stroke="currentColor"
+              strokeLinecap="square"
+            ></path>
+          </svg>
+        )}
+      </div>
+
       <div className={style.column}>
         <h4>{username}</h4>
         <div className={style.row}>
