@@ -12,6 +12,7 @@ import LoginPage from './pages/LoginPage';
 import RegistrationPage from './pages/RegistrationPage';
 import FullPostPage from './pages/FullPostPage';
 import PostsPage from './pages/PostsPage';
+import FullUserPage from './pages/FullUserPage';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -43,6 +44,7 @@ const App: React.FC = () => {
         <Route path="/auth/registration" element={<RegistrationPage />} />
         <Route path="/post/:postId" element={<FullPostPage />} />
         <Route path="/posts" element={<PostsPage />} />
+        <Route path="/users/:userId" element={<FullUserPage />} />
       </Routes>
       <Footer />
     </>

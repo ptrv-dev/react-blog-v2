@@ -29,7 +29,7 @@ const sortDateList = [
 ];
 
 const PostsPage: React.FC = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const [data, setData] = React.useState<IPost[] | null>(null);
   const [sortBy, setSortBy] = React.useState<number>(

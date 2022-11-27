@@ -27,7 +27,7 @@ const PostCard: React.FC<IPost> = ({
       )}
       <div className={style.body}>
         <div className={style.top}>
-          <Link to={`/user/${author.username}`} className={style.author}>
+          <Link to={`/users/${author._id}`} className={style.author}>
             {author.username}
           </Link>
           <span className={style.date}>

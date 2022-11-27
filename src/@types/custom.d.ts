@@ -46,6 +46,7 @@ export interface IUser {
   password: string;
   avatar: string;
   posts: IPost[];
+  comments: IComment[];
   createdAt: Date;
   updatedAt: Date;
   __v: number;

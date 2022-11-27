@@ -8,7 +8,8 @@ import { IComment } from '../../@types/custom';
 import style from './CommentItem.module.scss';
 
 interface CommentItemProps extends IComment {
-  onCommentRemove: (id: string) => void;
+  onCommentRemove?: (id: string) => void;
+  editable?: boolean;
 }
 
 const CommentItem: React.FC<CommentItemProps> = ({
@@ -18,6 +19,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
   likes,
   dislikes,
   onCommentRemove,
+  editable = false,
 }) => {
   const user = useAppSelector((state) => state.user);
 
@@ -45,12 +47,12 @@ const CommentItem: React.FC<CommentItemProps> = ({
       withCredentials: true,
     });
 
-    onCommentRemove(_id);
+    onCommentRemove!(_id);
     alert('Комментарий удален!');
   };
   return (
     <div className={style.comment}>
-      {author._id === user._id && (
+      {editable && author._id === user._id && (
         <div
           className={`${style.more} ${isMenuVisible ? style.moreActive : ''}`}
           onClick={handleMoreMenu}

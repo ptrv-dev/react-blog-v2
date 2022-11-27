@@ -79,10 +79,7 @@ const Actions: React.FC = () => {
           </div>
           {isUserMenuActive && (
             <div className={style.userMenu}>
-              <Link
-                to={`/users/${user.username}`}
-                className={style.userMenuItem}
-              >
+              <Link to={`/users/${user._id}`} className={style.userMenuItem}>
                 Мой профиль
               </Link>
               <Link

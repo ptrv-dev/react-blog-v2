@@ -117,7 +117,7 @@ const FullPostPage: React.FC = () => {
           <div className={style.postBody}>
             <div className={style.postTop}>
               <Link
-                to={`/users/${data.author.username}`}
+                to={`/users/${data.author._id}`}
                 className={style.postAuthor}
               >
                 {data.author.username}
@@ -201,6 +201,7 @@ const FullPostPage: React.FC = () => {
                 key={comment._id}
                 {...comment}
                 onCommentRemove={handleCommentRemove}
+                editable={true}
               />
             ))}
           </div>
