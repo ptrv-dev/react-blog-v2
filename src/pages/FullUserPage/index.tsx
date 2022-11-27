@@ -3,6 +3,9 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 
 import { IUser } from '../../@types/custom';
+
+import { useAppSelector } from '../../redux/store';
+
 import CommentItem from '../../components/CommentItem';
 import PostCard from '../../components/PostCard';
 import Button from '../../components/UI/Button';
@@ -12,7 +15,10 @@ import style from './FullUserPage.module.scss';
 const FullUserPage: React.FC = () => {
   const { userId } = useParams();
 
+  const user = useAppSelector((state) => state.user);
+
   const [data, setData] = React.useState<IUser | null>(null);
+  const [isAllPosts, setIsAllPosts] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     async function fetchUser() {
@@ -61,7 +67,11 @@ const FullUserPage: React.FC = () => {
                 </div>
                 <div className={style.userInfoTopColumn}>
                   <h4>{data.username}</h4>
-                  <Button size="small">Подписаться</Button>
+                  {data._id === user._id ? (
+                    <Button size="small">Настройки профиля</Button>
+                  ) : (
+                    <Button size="small">Подписаться</Button>
+                  )}
                 </div>
               </div>
               <div className={style.userInfoBottom}>
@@ -99,28 +109,54 @@ const FullUserPage: React.FC = () => {
             'Loading...'
           )}
         </div>
-        <div className={style.popularPosts}>
-          <h2>Популярные посты пользователя:</h2>
-          <div className={style.popularPostsGrid}>
-            {data
-              ? data.posts.map((post) => (
-                  <PostCard
-                    key={post._id}
-                    {...post}
-                    author={data}
-                    likes={new Map(Array.from(post.likes))}
-                    dislikes={new Map(Array.from(post.dislikes))}
-                  />
-                ))
-              : 'Loading...'}
+        {!data?.posts.length ? (
+          <div className={style.popularPosts}>
+            <h2>У этого пользователя ещё нет постов...</h2>
           </div>
-          <Button
-            href={`/users/posts/${userId}`}
-            className={style.popularPostsButton}
-          >
-            Посмотреть все
-          </Button>
-        </div>
+        ) : (
+          <div className={style.popularPosts}>
+            <h2>
+              {isAllPosts
+                ? 'Все посты пользователя:'
+                : 'Популярные посты пользователя:'}
+            </h2>
+            <div className={style.popularPostsGrid}>
+              {data
+                ? data.posts
+                    .sort((a, b) =>
+                      a[isAllPosts ? 'createdAt' : 'views'] >
+                      b[isAllPosts ? 'createdAt' : 'views']
+                        ? -1
+                        : 1
+                    )
+                    .slice(0, isAllPosts ? data.posts.length : 4)
+                    .map((post) => {
+                      console.log(Array.from(post.likes));
+                      return (
+                        <PostCard
+                          key={post._id}
+                          {...post}
+                          author={data}
+                          likes={new Map(Array.from(post.likes))}
+                          dislikes={new Map(Array.from(post.dislikes))}
+                        />
+                      );
+                    })
+                : 'Loading...'}
+            </div>
+            {!isAllPosts && (
+              <Button
+                className={style.popularPostsButton}
+                onClick={() => {
+                  setIsAllPosts(true);
+                  window.scroll(0, 0);
+                }}
+              >
+                Посмотреть все
+              </Button>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
