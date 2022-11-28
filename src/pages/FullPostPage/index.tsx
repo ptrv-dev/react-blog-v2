@@ -24,7 +24,6 @@ const FullPostPage: React.FC = () => {
       const { data } = await axios.get<IPost>(
         `http://localhost:4444/post/${postId}`
       );
-      console.log(data);
       setData({
         ...data,
         likes: new Map(data.likes),

@@ -13,6 +13,7 @@ import RegistrationPage from './pages/RegistrationPage';
 import FullPostPage from './pages/FullPostPage';
 import PostsPage from './pages/PostsPage';
 import FullUserPage from './pages/FullUserPage';
+import UserFavoritesPage from './pages/UserFavoritesPage';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -45,6 +46,10 @@ const App: React.FC = () => {
         <Route path="/post/:postId" element={<FullPostPage />} />
         <Route path="/posts" element={<PostsPage />} />
         <Route path="/users/:userId" element={<FullUserPage />} />
+        <Route
+          path="/users/:userId/favorites"
+          element={<UserFavoritesPage />}
+        />
       </Routes>
       <Footer />
     </>

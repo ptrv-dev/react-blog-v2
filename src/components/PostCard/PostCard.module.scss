@@ -75,3 +75,10 @@
   display: flex;
   gap: 15px;
 }
+.favorite {
+  svg {
+    path {
+      fill: #206ff3;
+    }
+  }
+}

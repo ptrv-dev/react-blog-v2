@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import { IUser } from '../../@types/custom';
+import { IPost, IUser } from '../../@types/custom';
 
 import { useAppSelector } from '../../redux/store';
 
@@ -19,6 +19,7 @@ const FullUserPage: React.FC = () => {
 
   const [data, setData] = React.useState<IUser | null>(null);
   const [isAllPosts, setIsAllPosts] = React.useState<boolean>(false);
+  const [favoritePosts, setFavoritePosts] = React.useState<IPost[]>([]);
 
   React.useEffect(() => {
     async function fetchUser() {
@@ -35,6 +36,12 @@ const FullUserPage: React.FC = () => {
     }
 
     fetchUser();
+  }, [userId]);
+
+  React.useEffect(() => {
+    axios
+      .get<IPost[]>(`http://localhost:4444/users/${userId}/favorites`)
+      .then((result) => setFavoritePosts(result.data));
   }, [userId]);
 
   return (
@@ -130,18 +137,18 @@ const FullUserPage: React.FC = () => {
                         : 1
                     )
                     .slice(0, isAllPosts ? data.posts.length : 4)
-                    .map((post) => {
-                      console.log(Array.from(post.likes));
-                      return (
-                        <PostCard
-                          key={post._id}
-                          {...post}
-                          author={data}
-                          likes={new Map(Array.from(post.likes))}
-                          dislikes={new Map(Array.from(post.dislikes))}
-                        />
-                      );
-                    })
+                    .map((post) => (
+                      <PostCard
+                        key={post._id}
+                        {...post}
+                        author={data}
+                        likes={new Map(Array.from(post.likes))}
+                        dislikes={new Map(Array.from(post.dislikes))}
+                        isFavorite={
+                          !!favoritePosts.find((fav) => fav._id === post._id)
+                        }
+                      />
+                    ))
                 : 'Loading...'}
             </div>
             {!isAllPosts && (

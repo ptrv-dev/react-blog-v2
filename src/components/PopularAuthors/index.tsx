@@ -45,8 +45,6 @@ const PopularAuthors: React.FC = () => {
     fetchUsers();
   }, []);
 
-  console.log(data);
-
   return (
     <div className={style.root}>
       <h3>Популярные авторы:</h3>

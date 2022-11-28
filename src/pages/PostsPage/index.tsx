@@ -2,6 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
 
+import { useAppSelector } from '../../redux/store';
+
 import PostCard from '../../components/PostCard';
 
 import { IPost } from '../../@types/custom';
@@ -29,6 +31,8 @@ const sortDateList = [
 ];
 
 const PostsPage: React.FC = () => {
+  const user = useAppSelector((state) => state.user);
+
   const [searchParams] = useSearchParams();
 
   const [data, setData] = React.useState<IPost[] | null>(null);
@@ -48,6 +52,7 @@ const PostsPage: React.FC = () => {
   const [sortDate, setSortDate] = React.useState<number>(2);
   const [sortByPopup, setSortByPopup] = React.useState(false);
   const [sortDatePopup, setSortDatePopup] = React.useState(false);
+  const [favoritePosts, setFavoritePosts] = React.useState<IPost[]>([]);
 
   React.useEffect(() => {
     const parseQueryParams = () => {
@@ -80,6 +85,13 @@ const PostsPage: React.FC = () => {
       alert('Ошибка при загрузке постов...');
     }
   }, [searchParams, sortBy, sortDate]);
+
+  React.useEffect(() => {
+    if (user.isAuth)
+      axios
+        .get<IPost[]>(`http://localhost:4444/users/${user._id}/favorites`)
+        .then((result) => setFavoritePosts(result.data));
+  }, [user]);
 
   return (
     <div className={style.root}>
@@ -155,6 +167,9 @@ const PostsPage: React.FC = () => {
                   {...item}
                   likes={new Map(item.likes)}
                   dislikes={new Map(item.dislikes)}
+                  isFavorite={
+                    !!favoritePosts.find((fav) => fav._id === item._id)
+                  }
                 />
               ))
             : 'Loading...'}

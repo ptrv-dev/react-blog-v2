@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React from 'react';
 
+import { useAppSelector } from '../../redux/store';
+
 import LatestNews from '../../components/LatestNews';
 import PopularAuthors from '../../components/PopularAuthors';
 import PostCard from '../../components/PostCard';
@@ -11,8 +13,11 @@ import { IPost } from '../../@types/custom';
 import style from './HomePage.module.scss';
 
 const HomePage: React.FC = () => {
+  const user = useAppSelector((state) => state.user);
+
   const [latestPosts, setLatestPosts] = React.useState<IPost[]>([]);
   const [popularPosts, setPopularPosts] = React.useState<IPost[]>([]);
+  const [favoritePosts, setFavoritePosts] = React.useState<IPost[]>([]);
 
   React.useEffect(() => {
     async function fetchPosts() {
@@ -36,6 +41,13 @@ const HomePage: React.FC = () => {
     fetchPosts();
   }, []);
 
+  React.useEffect(() => {
+    if (user.isAuth)
+      axios
+        .get<IPost[]>(`http://localhost:4444/users/${user._id}/favorites`)
+        .then((result) => setFavoritePosts(result.data));
+  }, [user]);
+
   const todayDate = new Date().toLocaleDateString();
 
   return (
@@ -51,6 +63,9 @@ const HomePage: React.FC = () => {
                   {...item}
                   likes={new Map(item.likes)}
                   dislikes={new Map(item.dislikes)}
+                  isFavorite={
+                    !!favoritePosts.find((fav) => fav._id === item._id)
+                  }
                 />
               ))}
             </div>
@@ -70,6 +85,9 @@ const HomePage: React.FC = () => {
                   {...item}
                   likes={new Map(item.likes)}
                   dislikes={new Map(item.dislikes)}
+                  isFavorite={
+                    !!favoritePosts.find((fav) => fav._id === item._id)
+                  }
                 />
               ))}
             </div>

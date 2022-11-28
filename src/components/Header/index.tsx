@@ -83,10 +83,16 @@ const Actions: React.FC = () => {
                 Мой профиль
               </Link>
               <Link
-                to={`/users/${user.username}/settings`}
+                to={`/users/${user._id}/settings`}
                 className={style.userMenuItem}
               >
                 Настройки профиля
+              </Link>
+              <Link
+                to={`/users/${user._id}/favorites`}
+                className={style.userMenuItem}
+              >
+                Избранное
               </Link>
               <button className={style.userMenuItem} onClick={handlePostCreate}>
                 Создать пост
