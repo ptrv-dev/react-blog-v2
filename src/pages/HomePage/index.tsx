@@ -56,25 +56,31 @@ const HomePage: React.FC = () => {
         <div className={style.body}>
           <section>
             <h2>Популярное за сегодня:</h2>
-            <div className={style.grid}>
-              {popularPosts.map((item) => (
-                <PostCard
-                  key={item._id}
-                  {...item}
-                  likes={new Map(item.likes)}
-                  dislikes={new Map(item.dislikes)}
-                  isFavorite={
-                    !!favoritePosts.find((fav) => fav._id === item._id)
-                  }
-                />
-              ))}
-            </div>
-            <Button
-              className={style.button}
-              href={`/posts?sortBy=views&order=desc&dateFrom=${todayDate}`}
-            >
-              Посмотреть все
-            </Button>
+            {popularPosts.length < 1 ? (
+              <h3>Сегодня ещё не было постов...</h3>
+            ) : (
+              <>
+                <div className={style.grid}>
+                  {popularPosts.map((item) => (
+                    <PostCard
+                      key={item._id}
+                      {...item}
+                      likes={new Map(item.likes)}
+                      dislikes={new Map(item.dislikes)}
+                      isFavorite={
+                        !!favoritePosts.find((fav) => fav._id === item._id)
+                      }
+                    />
+                  ))}
+                </div>
+                <Button
+                  className={style.button}
+                  href={`/posts?sortBy=views&order=desc&dateFrom=${todayDate}`}
+                >
+                  Посмотреть все
+                </Button>
+              </>
+            )}
           </section>
           <section>
             <h2>Последнее:</h2>
