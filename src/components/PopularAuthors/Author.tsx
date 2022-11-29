@@ -23,11 +23,7 @@ const Author: React.FC<AuthorProps> = ({
     <div className={style.root}>
       <div className={style.image}>
         {image ? (
-          <img
-            src={`./assets/img/users/${image}`}
-            alt={username}
-            className={style.image}
-          />
+          <img src={`http://localhost:4444/uploads/${image}`} alt={username} />
         ) : (
           <svg
             viewBox="0 0 15 15"

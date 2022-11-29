@@ -53,7 +53,7 @@ const Actions: React.FC = () => {
           <div className={style.userImage}>
             {user.avatar ? (
               <img
-                src={`/assets/img/users/${user.avatar}`}
+                src={`http://localhost:4444/uploads/${user.avatar}`}
                 alt={user.username}
               />
             ) : (
@@ -82,10 +82,7 @@ const Actions: React.FC = () => {
               <Link to={`/users/${user._id}`} className={style.userMenuItem}>
                 Мой профиль
               </Link>
-              <Link
-                to={`/users/${user._id}/settings`}
-                className={style.userMenuItem}
-              >
+              <Link to={`/user/settings`} className={style.userMenuItem}>
                 Настройки профиля
               </Link>
               <Link

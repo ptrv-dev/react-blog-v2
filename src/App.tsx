@@ -14,6 +14,7 @@ import FullPostPage from './pages/FullPostPage';
 import PostsPage from './pages/PostsPage';
 import FullUserPage from './pages/FullUserPage';
 import UserFavoritesPage from './pages/UserFavoritesPage';
+import UserSettingsPage from './pages/UserSettingsPage';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -50,6 +51,7 @@ const App: React.FC = () => {
           path="/users/:userId/favorites"
           element={<UserFavoritesPage />}
         />
+        <Route path="/user/settings" element={<UserSettingsPage />} />
       </Routes>
       <Footer />
     </>

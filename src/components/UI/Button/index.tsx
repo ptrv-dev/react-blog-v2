@@ -10,6 +10,7 @@ interface ButtonProps {
   href?: string;
   className?: string;
   onClick?: any;
+  type?: 'button' | 'submit' | 'reset';
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -19,6 +20,7 @@ const Button: React.FC<ButtonProps> = ({
   href,
   className,
   onClick,
+  type,
 }) => {
   const customClass = [style.button];
   size === 'small' && customClass.push(style.small);
@@ -34,7 +36,7 @@ const Button: React.FC<ButtonProps> = ({
     );
 
   return (
-    <button className={customClass.join(' ')} onClick={onClick}>
+    <button className={customClass.join(' ')} onClick={onClick} type={type}>
       {children}
     </button>
   );

@@ -40,9 +40,9 @@ const FullUserPage: React.FC = () => {
 
   React.useEffect(() => {
     axios
-      .get<IPost[]>(`http://localhost:4444/users/${userId}/favorites`)
+      .get<IPost[]>(`http://localhost:4444/users/${user._id}/favorites`)
       .then((result) => setFavoritePosts(result.data));
-  }, [userId]);
+  }, [user._id]);
 
   return (
     <div className={style.root}>
@@ -53,7 +53,10 @@ const FullUserPage: React.FC = () => {
               <div className={style.userInfoTop}>
                 <div className={style.userInfoAvatar}>
                   {data.avatar ? (
-                    <img src="" alt={data.username} />
+                    <img
+                      src={`http://localhost:4444/uploads/${data.avatar}`}
+                      alt={data.username}
+                    />
                   ) : (
                     <svg
                       width="30"
@@ -75,7 +78,9 @@ const FullUserPage: React.FC = () => {
                 <div className={style.userInfoTopColumn}>
                   <h4>{data.username}</h4>
                   {data._id === user._id ? (
-                    <Button size="small">Настройки профиля</Button>
+                    <Button size="small" href="/user/settings">
+                      Настройки профиля
+                    </Button>
                   ) : (
                     <Button size="small">Подписаться</Button>
                   )}
