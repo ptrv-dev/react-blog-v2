@@ -11,6 +11,7 @@ import Button from '../../components/UI/Button';
 import { IPost } from '../../@types/custom';
 
 import style from './HomePage.module.scss';
+import { appAxios } from '../../App';
 
 const HomePage: React.FC = () => {
   const user = useAppSelector((state) => state.user);
@@ -26,15 +27,15 @@ const HomePage: React.FC = () => {
       setPopularPosts([]);
       setLatestPosts([]);
 
-      axios
+      appAxios
         .get<IPost[]>(
-          `http://localhost:4444/post?dateFrom=${date}&sortBy=views&order=desc&limit=4`
+          `/post?dateFrom=${date}&sortBy=views&order=desc&limit=4`
         )
         .then((result) => setPopularPosts(result.data));
 
-      axios
+      appAxios
         .get<IPost[]>(
-          `http://localhost:4444/post?&sortBy=createdAt&order=desc&limit=4`
+          `/post?&sortBy=createdAt&order=desc&limit=4`
         )
         .then((result) => setLatestPosts(result.data));
     }
@@ -43,8 +44,8 @@ const HomePage: React.FC = () => {
 
   React.useEffect(() => {
     if (user.isAuth)
-      axios
-        .get<IPost[]>(`http://localhost:4444/users/${user._id}/favorites`)
+      appAxios
+        .get<IPost[]>(`/users/${user._id}/favorites`)
         .then((result) => setFavoritePosts(result.data));
   }, [user]);
 

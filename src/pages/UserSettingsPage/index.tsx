@@ -67,12 +67,8 @@ const UserSettingsPage: React.FC = () => {
 
     setImage(null);
     if (data && data.avatar) {
-      axios
-        .patch(
-          'http://localhost:4444/users',
-          { avatar: '' },
-          { withCredentials: true }
-        )
+      appAxios
+        .patch('/users', { avatar: '' }, { withCredentials: true })
         .then(() => window.location.reload());
     }
   };

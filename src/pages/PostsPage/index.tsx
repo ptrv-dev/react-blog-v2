@@ -89,8 +89,8 @@ const PostsPage: React.FC = () => {
 
   React.useEffect(() => {
     if (user.isAuth)
-      axios
-        .get<IPost[]>(`http://localhost:4444/users/${user._id}/favorites`)
+      appAxios
+        .get<IPost[]>(`/users/${user._id}/favorites`)
         .then((result) => setFavoritePosts(result.data));
   }, [user]);
 

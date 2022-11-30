@@ -8,6 +8,7 @@ import { IPost } from '../../@types/custom';
 
 import style from './PostCard.module.scss';
 import axios from 'axios';
+import { appAxios } from '../../App';
 
 interface PostCardProps extends IPost {
   isFavorite: boolean;
@@ -33,10 +34,8 @@ const PostCard: React.FC<PostCardProps> = ({
 
   const handleFavorite = async () => {
     try {
-      await axios.post(
-        `http://localhost:4444/users/favorite/${_id}`,
-        {},
-        { withCredentials: true }
+      await appAxios.post(
+        `/users/favorite/${_id}`,
       );
       setIsFavoriteState((prev) => !prev);
     } catch (error) {

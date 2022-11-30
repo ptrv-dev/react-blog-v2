@@ -21,9 +21,7 @@ const FullPostPage: React.FC = () => {
   React.useEffect(() => {
     async function fetchPostData() {
       setData(null);
-      const { data } = await appAxios.get<IPost>(
-        `http://localhost:4444/post/${postId}`
-      );
+      const { data } = await appAxios.get<IPost>(`/post/${postId}`);
       setData({
         ...data,
         likes: new Map(data.likes),
@@ -36,9 +34,7 @@ const FullPostPage: React.FC = () => {
   const handleLike = async () => {
     if (!isAuth) return false;
     try {
-      const { data } = await appAxios.patch(
-        `http://localhost:4444/post/${postId}/like`
-      );
+      const { data } = await appAxios.patch(`/post/${postId}/like`);
       setData(
         (prev) =>
           prev && {
@@ -56,9 +52,7 @@ const FullPostPage: React.FC = () => {
   const handleDislike = async () => {
     if (!isAuth) return false;
     try {
-      const { data } = await appAxios.patch(
-        `http://localhost:4444/post/${postId}/dislike`
-      );
+      const { data } = await appAxios.patch(`/post/${postId}/dislike`);
       setData(
         (prev) =>
           prev && {

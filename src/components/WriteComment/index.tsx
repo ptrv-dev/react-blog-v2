@@ -27,10 +27,10 @@ const WriteComment: React.FC<WriteCommentProps> = ({ postId, addComment }) => {
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     try {
-      const { data: newComment } = await appAxios.post(
-        'http://localhost:4444/comment',
-        { post: postId, text: data.text }
-      );
+      const { data: newComment } = await appAxios.post('/comment', {
+        post: postId,
+        text: data.text,
+      });
       reset();
       addComment(newComment);
     } catch (error) {

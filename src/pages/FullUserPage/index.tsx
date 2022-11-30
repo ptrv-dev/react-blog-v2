@@ -26,7 +26,7 @@ const FullUserPage: React.FC = () => {
     async function fetchUser() {
       try {
         const result = await appAxios.get<IUser>(
-          `http://localhost:4444/users/${userId}`
+          `/users/${userId}`
         );
         setData(result.data);
       } catch (error) {
@@ -40,8 +40,8 @@ const FullUserPage: React.FC = () => {
   }, [userId]);
 
   React.useEffect(() => {
-    axios
-      .get<IPost[]>(`http://localhost:4444/users/${user._id}/favorites`)
+    appAxios
+      .get<IPost[]>(`/users/${user._id}/favorites`)
       .then((result) => setFavoritePosts(result.data));
   }, [user._id]);
 
