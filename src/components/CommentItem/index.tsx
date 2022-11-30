@@ -1,11 +1,11 @@
 import React from 'react';
-import axios from 'axios';
 
 import { useAppSelector } from '../../redux/store';
 
 import { IComment } from '../../@types/custom';
 
 import style from './CommentItem.module.scss';
+import { appAxios } from '../../App';
 
 interface CommentItemProps extends IComment {
   onCommentRemove?: (id: string) => void;
@@ -43,9 +43,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
   const handleRemove = async () => {
     if (!window.confirm('Удалить комментарий?')) return false;
 
-    await axios.delete(`http://localhost:4444/comment/${_id}`, {
-      withCredentials: true,
-    });
+    await appAxios.delete(`/comment/${_id}`);
 
     onCommentRemove!(_id);
     alert('Комментарий удален!');

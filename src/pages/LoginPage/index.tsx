@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Navigate } from 'react-router-dom';
@@ -9,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/store';
 import Button from '../../components/UI/Button';
 
 import style from './LoginPage.module.scss';
+import { appAxios } from '../../App';
 
 interface FormFields {
   email: string;
@@ -31,15 +31,12 @@ const LoginPage: React.FC = () => {
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     setFormError(null);
     try {
-      await axios.post(
-        'http://localhost:4444/auth/login',
-        { email: data.email, password: data.password },
-        { withCredentials: true }
-      );
-
-      const result = await axios.get('http://localhost:4444/auth/me', {
-        withCredentials: true,
+      await appAxios.post('/auth/login', {
+        email: data.email,
+        password: data.password,
       });
+
+      const result = await appAxios.get('/auth/me');
       dispatch(login({ ...result.data, isAuth: true }));
     } catch (error) {
       setFormError('Неверный E-Mail или пароль.');

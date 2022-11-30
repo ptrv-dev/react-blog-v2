@@ -1,7 +1,7 @@
-import axios from 'axios';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { appAxios } from '../../App';
 
 import Button from '../UI/Button';
 
@@ -49,22 +49,14 @@ const PostCreateModal: React.FC<PostCreateModalProps> = ({ closeModal }) => {
       if (inputRef.current && inputRef.current!.files) {
         const formData = new FormData();
         formData.append('image', inputRef.current.files[0]);
-        const { data } = await axios.post(
-          'http://localhost:4444/upload',
-          formData,
-          { withCredentials: true }
-        );
+        const { data } = await appAxios.post('/upload', formData);
         image = data.filename;
       }
       // post create
-      const result = await axios.post(
-        'http://localhost:4444/post',
-        {
-          image: image,
-          ...data,
-        },
-        { withCredentials: true }
-      );
+      const result = await appAxios.post('/post', {
+        image: image,
+        ...data,
+      });
       alert('Ваш пост успешно создан!');
       closeModal();
       navigate(`/post/${result.data._id}`);

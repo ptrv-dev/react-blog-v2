@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 
 import { IComment, IPost } from '../../@types/custom';
@@ -11,6 +10,7 @@ import Button from '../../components/UI/Button';
 import style from './FullPostPage.module.scss';
 import WriteComment from '../../components/WriteComment';
 import CommentItem from '../../components/CommentItem';
+import { appAxios } from '../../App';
 
 const FullPostPage: React.FC = () => {
   const { postId } = useParams();
@@ -21,7 +21,7 @@ const FullPostPage: React.FC = () => {
   React.useEffect(() => {
     async function fetchPostData() {
       setData(null);
-      const { data } = await axios.get<IPost>(
+      const { data } = await appAxios.get<IPost>(
         `http://localhost:4444/post/${postId}`
       );
       setData({
@@ -36,10 +36,8 @@ const FullPostPage: React.FC = () => {
   const handleLike = async () => {
     if (!isAuth) return false;
     try {
-      const { data } = await axios.patch(
-        `http://localhost:4444/post/${postId}/like`,
-        {},
-        { withCredentials: true }
+      const { data } = await appAxios.patch(
+        `http://localhost:4444/post/${postId}/like`
       );
       setData(
         (prev) =>
@@ -58,10 +56,8 @@ const FullPostPage: React.FC = () => {
   const handleDislike = async () => {
     if (!isAuth) return false;
     try {
-      const { data } = await axios.patch(
-        `http://localhost:4444/post/${postId}/dislike`,
-        {},
-        { withCredentials: true }
+      const { data } = await appAxios.patch(
+        `http://localhost:4444/post/${postId}/dislike`
       );
       setData(
         (prev) =>

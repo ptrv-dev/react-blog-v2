@@ -1,11 +1,11 @@
 import React from 'react';
-import axios from 'axios';
 
 import { IUser } from '../../@types/custom';
 
 import Author from './Author';
 
 import style from './PopularAuthors.module.scss';
+import { appAxios } from '../../App';
 
 interface IUserExt extends IUser {
   totalViews: number;
@@ -20,7 +20,7 @@ const PopularAuthors: React.FC = () => {
     async function fetchUsers() {
       setData([]);
       try {
-        const result = await axios.get<IUser[]>('http://localhost:4444/users');
+        const result = await appAxios.get<IUser[]>('/users');
         setData(
           result.data.map((user) =>
             Object.assign(user, {

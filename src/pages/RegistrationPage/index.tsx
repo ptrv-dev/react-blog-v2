@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/store';
 import Button from '../../components/UI/Button';
 
 import style from './RegistrationPage.module.scss';
+import { appAxios } from '../../App';
 
 interface FormFields {
   username: string;
@@ -37,18 +38,14 @@ const LoginPage: React.FC = () => {
       return setFormError('Пароли не совпадают!');
 
     try {
-      await axios.post(
-        'http://localhost:4444/auth/registration',
+      await appAxios.post(
+        '/auth/registration',
         {
           ...data,
-        },
-        {
-          withCredentials: true,
         }
       );
-      const result = await axios.get<IGetMeResponse>(
-        'http://localhost:4444/auth/me',
-        { withCredentials: true }
+      const result = await appAxios.get<IGetMeResponse>(
+        '/auth/me',
       );
       dispatch(login({ ...result.data, isAuth: true }));
     } catch (error) {

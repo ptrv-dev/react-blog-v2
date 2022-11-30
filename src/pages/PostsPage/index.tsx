@@ -9,6 +9,7 @@ import PostCard from '../../components/PostCard';
 import { IPost } from '../../@types/custom';
 
 import style from './PostPage.module.scss';
+import { appAxios } from '../../App';
 
 const sortByList = [
   { name: 'популярности', key: 'views', order: 'desc' },
@@ -70,8 +71,8 @@ const PostsPage: React.FC = () => {
     };
 
     async function fetchData() {
-      const result = await axios.get<IPost[]>(
-        `http://localhost:4444/post?${parseQueryParams().join('&')}`
+      const result = await appAxios.get<IPost[]>(
+        `/post?${parseQueryParams().join('&')}`
       );
       setData(result.data);
     }

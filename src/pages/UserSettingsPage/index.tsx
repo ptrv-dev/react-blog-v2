@@ -8,6 +8,7 @@ import { IUser } from '../../@types/custom';
 import Button from '../../components/UI/Button';
 
 import style from './UserSettingsPage.module.scss';
+import { appAxios } from '../../App';
 
 interface FormFields {
   username: string;
@@ -36,9 +37,7 @@ const UserSettingsPage: React.FC = () => {
   React.useEffect(() => {
     async function fetchData() {
       try {
-        const result = await axios.get(
-          `http://localhost:4444/users/${user._id}`
-        );
+        const result = await appAxios.get(`/users/${user._id}`);
         setData(result.data);
       } catch (error) {
         setData(null);
@@ -54,7 +53,7 @@ const UserSettingsPage: React.FC = () => {
       setValue('username', data.username);
       setValue('email', data.email);
     }
-  }, [data]);
+  }, [data, setValue]);
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files![0];
@@ -78,32 +77,6 @@ const UserSettingsPage: React.FC = () => {
     }
   };
 
-  const handleSave = async () => {
-    if (!window.confirm('Сохранить изменения?')) return false;
-    try {
-      let image;
-      if (inputRef.current && inputRef.current.files) {
-        const formData = new FormData();
-        formData.append('image', inputRef.current.files[0]);
-        const { data } = await axios.post(
-          'http://localhost:4444/upload',
-          formData,
-          { withCredentials: true }
-        );
-        image = data.filename;
-      }
-      await axios.patch(
-        'http://localhost:4444/users',
-        { avatar: image },
-        { withCredentials: true }
-      );
-      window.location.reload();
-    } catch (error) {
-      console.error(error);
-      alert('Ошибка при попытке сохранить изменения в профиле...');
-    }
-  };
-
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     if (!window.confirm('Сохранить изменения?')) return false;
     try {
@@ -111,24 +84,16 @@ const UserSettingsPage: React.FC = () => {
       if (inputRef.current && inputRef.current.files) {
         const formData = new FormData();
         formData.append('image', inputRef.current.files[0]);
-        const { data } = await axios.post(
-          'http://localhost:4444/upload',
-          formData,
-          { withCredentials: true }
-        );
+        const { data } = await appAxios.post('/upload', formData);
         image = data.filename;
       }
-      await axios.patch(
-        'http://localhost:4444/users',
-        {
-          avatar: image,
-          username: data.username || undefined,
-          email: data.email || undefined,
-          currentPassword: data.currentPassword || undefined,
-          newPassword: data.newPassword || undefined,
-        },
-        { withCredentials: true }
-      );
+      await appAxios.patch('/users', {
+        avatar: image,
+        username: data.username || undefined,
+        email: data.email || undefined,
+        currentPassword: data.currentPassword || undefined,
+        newPassword: data.newPassword || undefined,
+      });
       window.location.reload();
     } catch (error) {
       if (axios.isAxiosError(error)) {

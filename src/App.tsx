@@ -19,16 +19,19 @@ import UserSettingsPage from './pages/UserSettingsPage';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
+export const appAxios = axios.create({
+  baseURL: 'https://express-likbezz-production.up.railway.app/',
+  withCredentials: true,
+});
+
 const App: React.FC = () => {
+  console.log(process.env.BASE_URI_API);
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
     async function fetchUser() {
       try {
-        const { data } = await axios.get<IGetMeResponse>(
-          'http://localhost:4444/auth/me',
-          { withCredentials: true }
-        );
+        const { data } = await appAxios.get<IGetMeResponse>('/auth/me');
         dispatch(login({ ...data, isAuth: true }));
       } catch (error) {
         dispatch(logout());

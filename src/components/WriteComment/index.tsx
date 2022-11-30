@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { IComment } from '../../@types/custom';
@@ -7,6 +6,7 @@ import { IComment } from '../../@types/custom';
 import Button from '../UI/Button';
 
 import style from './WriteComment.module.scss';
+import { appAxios } from '../../App';
 
 interface WriteCommentProps {
   postId: string;
@@ -27,10 +27,9 @@ const WriteComment: React.FC<WriteCommentProps> = ({ postId, addComment }) => {
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     try {
-      const { data: newComment } = await axios.post(
+      const { data: newComment } = await appAxios.post(
         'http://localhost:4444/comment',
-        { post: postId, text: data.text },
-        { withCredentials: true }
+        { post: postId, text: data.text }
       );
       reset();
       addComment(newComment);

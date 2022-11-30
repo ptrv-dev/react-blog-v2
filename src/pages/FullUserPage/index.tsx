@@ -11,6 +11,7 @@ import PostCard from '../../components/PostCard';
 import Button from '../../components/UI/Button';
 
 import style from './FullUserPage.module.scss';
+import { appAxios } from '../../App';
 
 const FullUserPage: React.FC = () => {
   const { userId } = useParams();
@@ -24,7 +25,7 @@ const FullUserPage: React.FC = () => {
   React.useEffect(() => {
     async function fetchUser() {
       try {
-        const result = await axios.get<IUser>(
+        const result = await appAxios.get<IUser>(
           `http://localhost:4444/users/${userId}`
         );
         setData(result.data);
